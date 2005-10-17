@@ -19,3 +19,5 @@ make clean
 make
 make install
 make test
+run ease to test install
+
