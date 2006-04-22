@@ -1,6 +1,6 @@
 /* vim: set ts=4 sw=4 nowrap: */
 /*
-Copyright (C) 2005 Stroppytux
+Copyright (C) 2005 Plasmaperfect Ltd.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -17,18 +17,22 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 #include <stdio.h>
+#include <stdarg.h>
 #include <ease.h>
 
 /************************************************************************/
 /*							Wrapper Function							*/
 /************************************************************************/
-int ease(Ease *e)														/* Function to check which ease method to use */
+int ease(Ease *e, ...)													/* Function to check which ease method to use */
 {
+	/* Lets parse the variadic call */
+	va_list ap, ap_copy;												/* Extract our variable arguments */
+	va_start(ap, e);													/* Start our variadic argument parsing */
 	int retval	= 0;													/* Set our default return value */
 	/* Loop to get all our results */
-	e->time		= 0;
+	e->time		= 0;													/* Reset out time marker */
 	while(e->time <= e->duration) {
-		/* Need to find a more efective way of doing this, anybody know	*/
+		/* Need to find an efective way of doing this, anybody know		*/
 		/* how to call a function from a string name, or a func_exists,	*/
 		/* or define a pointer to a function from a string name???		*/
 		switch( e->type )
@@ -50,10 +54,18 @@ int ease(Ease *e)														/* Function to check which ease method to use */
 				retval		= easeNone(e);								/* Run our easeNone function */
 				break;
 		}
-		(*e->fpoint)();													/* Call our function pointed to in fpoint */
+		/* For each iteration, we need to copy the ap and pass it into ease */
+#ifdef __va_copy
+		__va_copy(ap_copy, ap);											/* Create a copy of ap */
+#else
+		ap_copy = ap;													/* We dont have __va_copy, just try copy it */
+#endif
+		/* Lets call our function pointer */
+		(*e->fpoint)(e,ap_copy);										/* Call our function pointed to in fpoint and pass in our args*/
 		e->time++;														/* Increase out time */
 	}
-	return( retval );													/* Return our result */
+	va_end(ap);
+	return(retval);														/* Return our result */
 }
 /************************************************************************/
 /*							Ease functions								*/
@@ -99,27 +111,3 @@ int easeNone(Ease *e)													/* No Easing, just scroll */
 	e->value		= e->difference*tmpTime/e->duration + e->initial;
 	return 0;															/* All went well */
 }
-
-/************************************************************************/
-/*					Timer/Delay functions								*/
-/************************************************************************/
-//int timeDelay(int i)													/* Create a pause to control speed */
-//{
-//	struct timeval timeout;												/* Create time structure */
-//	if (i>0)															/* If the input time > 0 */
-//	{
-//		timeout.tv_usec = i % (unsigned long) 1000000;					/* Usec = time / 1000000 */
-//		timeout.tv_sec = i / (unsigned long) 1000000;					/* sec = time / 1000000 */
-//		select(0, NULL, NULL, NULL, &timeout);							/* Do the pause */
-//	}
-//	return (i>0 ? i : 0);												/* Return pause time */
-//}
-//int timeDiff()														/* Calc how long loop took */
-//{
-//	gettimeofday(&delay.rt, NULL);										/* Grab current time */
-//	delay._d = (1000000*(delay.rt.tv_sec-delay.st.tv_sec))+				/* Get delay time */
-//		(delay.rt.tv_usec-delay.st.tv_usec);
-//	delay.st = delay.rt;												/* Link the too */
-//	return delay._d;													/* Return the delay */
-//}
-

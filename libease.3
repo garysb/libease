@@ -1,0 +1,68 @@
+.\" Copyright 2006 Plasmaperfect Ltd. <gary@plasmaperfect.net>
+.\" libease is distributed under the GPL
+.\"
+.\" Permission is granted to make and distribute verbatim copies of this
+.\" manual provided the copyright notice and this permission notice are
+.\" preserved on all copies.
+.\"
+.\" Permission is granted to copy and distribute modified versions of this
+.\" manual under the conditions for verbatim copying, provided that the
+.\" entire resulting derived work is distributed under the terms of a
+.\" permission notice identical to this one
+.\"
+.\" Since the Linux kernel and libraries are constantly changing, this
+.\" manual page may be incorrect or out-of-date.  The author(s) assume no
+.\" responsibility for errors or omissions, or for damages resulting from
+.\" the use of the information contained herein.  The author(s) may not
+.\" have taken the same level of care in the production of this manual,
+.\" which is licensed free of charge, as they might when working
+.\" professionally.
+.\"
+.\" Formatted or processed versions of this manual, if unaccompanied by
+.\" the source, must acknowledge the copyright and authors of this work.
+.\"
+.\" References consulted:
+.\"     libease source code
+
+.TH libease 3
+.SH NAME
+libease \- Easing library for graphical effects and mathimatical functions
+.SH SYNOPSIS
+.nf
+.B #include <ease.h>
+
+.B int ease(Ease *e, ...);
+
+.B int easeIn(Ease *e);
+.B int easeOut(Ease *e);
+.B int easeIo(Ease *e);
+.B int easeOi(Ease *e);
+.B int easeNone(Ease *e);
+
+.B typedef struct {
+ 	int duration;
+ 	int time;
+	int difference;
+	int initial;
+	int value;
+	int (*fpoint)();
+	int type;
+.B } Ease;
+
+.SH DESCRIPTION
+The
+.I libease
+library creates the functionality to perform mathimatical calculations on a range
+of numbers. Given a starting number, destination number, and the number of steps
+to take, libease will calculate all the values to get from start to destination.
+
+.SH FILES
+.B libease.h			- The header file to define function prototypes
+.br
+.B libease.so.0.0.2	- The shared library
+.br
+.B ease				- The test file to check the easing library is working correctly
+
+.SH "AUTHOR"
+Gary Broadbent
+http://plasmaperfect.net

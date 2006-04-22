@@ -1,6 +1,6 @@
 /* vim: set ts=4 sw=4 nowrap: */
 /*
-Copyright (C) 2005 Stroppytux
+Copyright (C) 2006 Plasmaperfect Ltd.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -22,11 +22,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define _HAVE_LIBEASE_
 
 /* Ease types */
-#define IN		1													/* Starts slow, then speeds up to the end */
-#define OUT		2													/* Starts fast, then slows down to the end */
-#define IO		3													/* Starts slow, fast in middle, ends slow */
-#define OI		4													/* Starts fast, slow in middle, ends fast */
-#define NONE	5													/* Linear, just changes at same rate */
+#define NONE	1													/* Linear, just changes at same rate */
+#define IN		2													/* Starts slow, then speeds up to the end */
+#define OUT		3													/* Starts fast, then slows down to the end */
+#define IO		4													/* Starts slow, fast in middle, ends slow */
+#define OI		5													/* Starts fast, slow in middle, ends fast */
 
 /* Easing structure */
 typedef struct {
@@ -40,16 +40,12 @@ typedef struct {
 } Ease;
 
 /* Wrapper Function */
-int ease(Ease *e);													/* Our main 'caller' method */
+int ease(Ease *e, ...);												/* Our main 'caller' method */
 /* Ease Functions */
 int easeIn(Ease *e);												/* Ease value in */
 int easeOut(Ease *e);												/* Ease value out */
 int easeIo(Ease *e);												/* Ease value in half way, then out */
 int easeOi(Ease *e);												/* Ease value out half way, the in */
 int easeNone(Ease *e);												/* Linear inc/dec of value */
-/* Delay functions */
-//int timeDelay(int i);												/* Create a delay (pause) */
-//int timeDiff();													/* Calculate function execution time */
 
 #endif
-
