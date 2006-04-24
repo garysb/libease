@@ -1,0 +1,26 @@
+Libease Release notes
+
+##### 0.0.2 ##########
+This release of libease adds a variadic method to pass function paramaters into the
+callback function. This lets you remove the variables that previously needed to be
+defined in the global scope and pass them straight into the Easing library. For each
+iteration of the easing method called, the variadic methods are copied and the copy
+is then passed into the callback function.
+
+All previous functions used for the callback will have to be remade to accept the
+va_list paramater and then use va_arg to grab each variable passed in.
+
+An example of how this works can be found in the ease.c test file. This passes
+in an 'int' into the Ease library to tell us how often we have called an ease method
+and passes in a 'char' to tell us which ease method we have chosen to run.
+
+##### 0.0.1 ##########
+Added Ease in
+Added Ease out
+Added Ease io
+Added Ease oi
+Added Ease none
+
+This is the initial release. It contains the basic structure of how libease is going to work
+plus some easing methods to start testing.
+

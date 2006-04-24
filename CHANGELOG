@@ -1,0 +1,20 @@
+libease changelog
+
+##### libease 0.0.2 ##########
+Changed ease function to accept variadic method
+Changed ease function to pass variadic method to callback function
+Changed ease.c to pass variadic methods into ease function
+Changed call function to accept va_list type paramater
+Added RELEASE file
+Added this CHANGELOG file
+Added libease.3 man page
+
+##### libease 0.0.1 ##########
+Initial release
+Added ease in
+Added ease out
+Added ease io
+Added ease oi
+Added ease none
+Added main ease caller
+
