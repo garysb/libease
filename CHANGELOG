@@ -1,5 +1,12 @@
 libease changelog
 
+##### libease 0.0.3 ##########
+Changed copyright information
+Modified Makefile to use dynamic variables for the versioning
+Fixed Makefile bug that ran ldconfig to early
+Added easeBounceIn method
+Added easeBounceOut method
+
 ##### libease 0.0.2 ##########
 Changed ease function to accept variadic method
 Changed ease function to pass variadic method to callback function

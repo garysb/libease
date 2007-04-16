@@ -3,6 +3,7 @@
 CC			= gcc
 PREFIX		= /usr
 # Setup our variables
+EASEVER		= "0.0.3"
 MAN_PATH	= ${PREFIX}/share/man/man3
 LIBPATH		= ${PREFIX}/lib
 BINPATH		= ${PREFIX}/bin
@@ -13,25 +14,26 @@ LDFLAGS		+= -L${LIBPATH}
 SRCS		= libease.c
 OBJS		= ${SRCS:.c=.o}
 
-all: libease.so.0.0.2
+all: libease.so.${EASEVER}
 
-libease.so.0.0.2: $(OBJS)
+libease.so.${EASEVER}: $(OBJS)
 	@echo Building ease library
-	@${CC} ${LIBFLAGS},${@:.0.0.1=.0} -o $@ ${OBJS} -lc				# Create our library
+	@${CC} ${LIBFLAGS},${@:.${EASEVER}=.0} -o $@ ${OBJS} -lc		# Create our library
 	@echo Done, Please type \'make install\' to install.
 libease.o:
 	@install ease.h ${PREFIX}/include/
 	@${CC} ${CFLAGS} ${OBJS} ${SRCS}								# Build our .o file from our .c file using flags
 install:
-	@echo 'Copying libease.so.0.0.2 -> ${LIBPATH}'
-	@install libease.so.0.0.2 ${LIBPATH}							# Copy our library to the correct path
+	@echo 'Copying libease.so.${EASEVER} -> ${LIBPATH}'
+	@install libease.so.${EASEVER} ${LIBPATH}						# Copy our library to the correct path
 	@ldconfig														# Run ldconfig to install shared library
-	@echo 'Linking ${LIBPATH}/libease.so.0.0.2 -> ${LIBPATH}/libease.so'
-	@ln -s ${LIBPATH}/libease.so.0.0.2 ${LIBPATH}/libease.so		# Link our access file in
+	@echo 'Linking ${LIBPATH}/libease.so.${EASEVER} -> ${LIBPATH}/libease.so'
+	@ln -s ${LIBPATH}/libease.so.${EASEVER} ${LIBPATH}/libease.so	# Link our access file in
 	@echo 'Copying ease.h -> ${PREFIX}/include/'
 	@install ease.h ${PREFIX}/include/								# Install the header file
 	@echo 'Installing libease.3 -> ${MAN_PATH}/libease.3'
 	@install libease.3 $(MAN_PATH)
+	@ldconfig														# Rerun ldconfig (bug fix #122)
 	@echo Done, Please type \'make test\' to ensure that the
 	@echo library was installed properly.
 uninstall:
@@ -41,7 +43,7 @@ uninstall:
 
 clean:
 	@echo Removing all object files
-	@rm -f ${OBJS} libease.so.0.0.2 ease ease.o						# Remove any files from our last build
+	@rm -f ${OBJS} libease.so.${EASEVER} ease ease.o				# Remove any files from our last build
 	@echo Done
 test:
 	@echo Compiling test executable
@@ -52,8 +54,9 @@ test:
 	@./ease	out														# Execute our test
 	@./ease io														# Execute our test
 	@./ease	oi														# Execute our test
+	@./ease	bi														# Execute our test
+	@./ease	bo														# Execute our test
 	@./ease	none													# Execute our test
 	@echo Done
 	@echo If you would like to execute the test manually,
 	@echo please run ./ease from within this directory.
-

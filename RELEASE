@@ -1,5 +1,8 @@
 Libease Release notes
 
+##### 0.0.3 ##########
+
+
 ##### 0.0.2 ##########
 This release of libease adds a variadic method to pass function paramaters into the
 callback function. This lets you remove the variables that previously needed to be
