@@ -1,7 +1,8 @@
 Libease Release notes
 
 ##### 0.0.3 ##########
-
+This release of libease adds 5 new easing methods to the library. The new methods are
+easeBounceIn, easeBounceOut, easeBackIn easeBackOut, easeBackIo.
 
 ##### 0.0.2 ##########
 This release of libease adds a variadic method to pass function paramaters into the
