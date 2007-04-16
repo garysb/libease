@@ -33,7 +33,7 @@ int main(int argc, char **argv) {
 
 	/* If we have no arguments, return program usage */
 	if (argc < 2) {
-		printf("Usage: ./ease [in|out|none|io|oi|bi|bo]\n");
+		printf("Usage: ./ease [in|out|none|io|oi|bi|bo|ki|ko|kb]\n");
 		return 1;
 	}
 
@@ -134,6 +134,51 @@ int main(int argc, char **argv) {
 			continue;
 		}
 
+		/* If we have the 'ki' argument */
+		if (!strcmp(argv[i], "ki")) {
+			Ease kiEase;
+			kiEase.type			= KI;
+			kiEase.initial		= 0;
+			kiEase.duration		= 10;
+			kiEase.difference	= 20;
+			kiEase.overshot		= 2;
+			kiEase.fpoint		= call;
+			passthru2			= 7;
+			strcpy(passthru1,"KI");
+			retval				= ease(&kiEase,passthru1,passthru2);
+			continue;
+		}
+
+		/* If we have the 'ko' argument */
+		if (!strcmp(argv[i], "ko")) {
+			Ease koEase;
+			koEase.type			= KO;
+			koEase.initial		= 0;
+			koEase.duration		= 10;
+			koEase.difference	= 20;
+			koEase.overshot		= 2;
+			koEase.fpoint		= call;
+			passthru2			= 8;
+			strcpy(passthru1,"KO");
+			retval				= ease(&koEase,passthru1,passthru2);
+			continue;
+		}
+
+		/* If we have the 'kb' argument */
+		if (!strcmp(argv[i], "kb")) {
+			Ease kbEase;
+			kbEase.type			= KB;
+			kbEase.initial		= 0;
+			kbEase.duration		= 10;
+			kbEase.difference	= 20;
+			kbEase.overshot		= 2;
+			kbEase.fpoint		= call;
+			passthru2			= 9;
+			strcpy(passthru1,"KB");
+			retval				= ease(&kbEase,passthru1,passthru2);
+			continue;
+		}
+
 		/* If we have the 'none' argument */
 		if (!strcmp(argv[i], "none")) {
 			Ease noneEase;
@@ -142,7 +187,7 @@ int main(int argc, char **argv) {
 			noneEase.duration	= 10;
 			noneEase.difference	= 20;
 			noneEase.fpoint		= call;
-			passthru2			= 7;
+			passthru2			= 10;
 			strcpy(passthru1,"NONE");
 			retval				= ease(&noneEase,passthru1,passthru2);
 			continue;

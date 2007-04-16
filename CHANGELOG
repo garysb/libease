@@ -6,6 +6,9 @@ Modified Makefile to use dynamic variables for the versioning
 Fixed Makefile bug that ran ldconfig to early
 Added easeBounceIn method
 Added easeBounceOut method
+Added easeBackIn method
+Added easeBackOut method
+Added easeBackIo method
 
 ##### libease 0.0.2 ##########
 Changed ease function to accept variadic method

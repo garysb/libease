@@ -56,6 +56,9 @@ test:
 	@./ease	oi														# Execute our test
 	@./ease	bi														# Execute our test
 	@./ease	bo														# Execute our test
+	@./ease	ki														# Execute our test
+	@./ease	ko														# Execute our test
+	@./ease	kb														# Execute our test
 	@./ease	none													# Execute our test
 	@echo Done
 	@echo If you would like to execute the test manually,

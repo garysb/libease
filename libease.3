@@ -37,6 +37,11 @@ libease \- Easing library for graphical effects and mathimatical functions
 .B int easeOut(Ease *e);
 .B int easeIo(Ease *e);
 .B int easeOi(Ease *e);
+.B int easeBackIn(Ease *e);
+.B int easeBackOut(Ease *e);
+.B int easeBackIo(Ease *e);
+.B int easeBounceIn(Ease *e);
+.B int easeBounceOut(Ease *e);
 .B int easeNone(Ease *e);
 
 .B typedef struct {
@@ -44,6 +49,7 @@ libease \- Easing library for graphical effects and mathimatical functions
  	int time;
 	int difference;
 	int initial;
+	float overshot;
 	int value;
 	int (*fpoint)();
 	int type;

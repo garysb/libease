@@ -57,6 +57,15 @@ int ease(Ease *e, ...)													/* Function to check which ease method to use
 			case BO:													/* Call the easeOi function */
 				retval		= easeBounceOut(e);							/* Run our easeOi function */
 				break;
+			case KI:													/* Call the easeOi function */
+				retval		= easeBackIn(e);							/* Run our easeOi function */
+				break;
+			case KO:													/* Call the easeOi function */
+				retval		= easeBackOut(e);							/* Run our easeOi function */
+				break;
+			case KB:													/* Call the easeOi function */
+				retval		= easeBackIo(e);							/* Run our easeOi function */
+				break;
 			case NONE:													/* Call the easeNone function (linear) */
 			default:
 				retval		= easeNone(e);								/* Run our easeNone function */
@@ -184,5 +193,36 @@ int easeBounceOut(Ease *e)
 	}
 	tmpTime			= tmpTime- (2.625/2.75);
 	e->value		= e->difference*(7.5625*tmpTime*tmpTime + .984375) + e->initial;
+	return 0;
+}
+
+/* Ease back in method - This will first negate the number before easing in. */
+int easeBackIn(Ease *e)
+{
+	float tmpTime	= e->time;
+	e->value		= e->difference*(tmpTime/=e->duration)*tmpTime*((e->overshot+1)*tmpTime - e->overshot) + e->initial;
+	return 0;
+}
+
+/* Ease back in method - This will first negate the number before easing in. */
+int easeBackOut(Ease *e)
+{
+	float tmpTime	= e->time;
+	e->value		= e->difference*((tmpTime=tmpTime/e->duration-1)*tmpTime*((e->overshot+1)*tmpTime + e->overshot) + 1) + e->initial;
+	return 0;
+}
+
+/* Ease back in method - This will first negate the number before easing in. */
+int easeBackIo(Ease *e)
+{
+	float tmpTime	= e->time;
+
+	if ((tmpTime /= e->duration/2 ) < 1) {
+		float tmpOvershot = e->overshot;
+		e->value	= e->difference/2*(tmpTime*tmpTime*(((tmpOvershot*=(1.525))+1)*tmpTime - tmpOvershot)) + e->initial;
+		return 0;
+	}
+	float tmpOvershot = e->overshot;
+	e->value		= e->difference/2*((tmpTime-=2)*tmpTime*(((tmpOvershot*=(1.525))+1)*tmpTime + tmpOvershot) + 2) + e->initial;
 	return 0;
 }
