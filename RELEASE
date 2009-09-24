@@ -1,5 +1,15 @@
 Libease Release notes
 
+##### 0.0.4 ##########
+This release of libease adds the ability to do multi dimensional easing, removes
+the huge switch statement an replaces it with a much cleaner function pointer,
+fixes a bug that was causing gcc to generate a stack protection fault and cleans
+up some bad commenting.
+
+An example of how to use the multidimensional easing function has been added to
+show a simple 3 dimension ease using a diferent easing method for each dimension
+and a ease diferent duration for each dimension.
+
 ##### 0.0.3 ##########
 This release of libease adds 5 new easing methods to the library. The new methods are
 easeBounceIn, easeBounceOut, easeBackIn easeBackOut, easeBackIo.

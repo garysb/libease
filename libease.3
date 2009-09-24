@@ -1,4 +1,4 @@
-.\" Copyright 2007 Gary Stidston-Broadbent. <gary@stroppytux.net>
+.\" Copyright 2009 Gary Stidston-Broadbent. <gary@stroppytux.net>
 .\" libease is distributed under the GPL
 .\"
 .\" Permission is granted to make and distribute verbatim copies of this
@@ -32,6 +32,7 @@ libease \- Easing library for graphical effects and mathimatical functions
 .B #include <ease.h>
 
 .B int ease(Ease *e, ...);
+.B int ease_multi(Ease_Multi *e, ...);
 
 .B int easeIn(Ease *e);
 .B int easeOut(Ease *e);
@@ -54,6 +55,11 @@ libease \- Easing library for graphical effects and mathimatical functions
 	int (*fpoint)();
 	int type;
 .B } Ease;
+
+.B typedef struct {
+	Ease dimension[MULTI_MAX];
+	int (*fpoint)();
+.B } Ease_Multi;
 
 .SH DESCRIPTION
 The
