@@ -3,7 +3,9 @@ libease changelog
 ##### libease 0.0.4 ##########
 Changed copyright information
 Tidied up comments
-
+Added multi dimensional easing. (eg. x, y, z, t, ...)
+Removed switch statement and changed it to a function pointer to choose the ease method
+Fixed stack overflow raising gcc stack protection in variadic data
 
 ##### libease 0.0.3 ##########
 Changed copyright information

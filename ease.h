@@ -21,17 +21,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef _HAVE_LIBEASE_
 #define _HAVE_LIBEASE_
 
-/* Ease types */
-#define NONE	1													/* Linear, just changes at same rate */
-#define IN		2													/* Starts slow, then speeds up to the end */
-#define OUT		3													/* Starts fast, then slows down to the end */
-#define IO		4													/* Starts slow, fast in middle, ends slow */
-#define OI		5													/* Starts fast, slow in middle, ends fast */
-#define BI		6													/* Bounces the value before easing in */
-#define BO		7													/* Bounces the value after easing out */
-#define KI		8													/* Back in the easing (returns negative numbers) */
-#define KO		9													/* Back out the easing (returns negative numbers) */
-#define KB		10													/* Back in and out easing */
+/* Set the maximum amount of dimensions for multi easing */
+#define MULTI_MAX 11
 
 /* Easing structure */
 typedef struct {
@@ -42,11 +33,18 @@ typedef struct {
 	float overshot;													/* How far to overshoot the value when easing */
 	int value;														/* Hold our result value */
 	int (*fpoint)();												/* Hold a pointer to our callback function */
-	int (*type)();													/* The ease type */
+	int (*type)();													/* The ease type (pointer to one of the methods below) */
 } Ease;
 
-/* Wrapper Function */
-int ease(Ease *e, ...);												/* Our main 'caller' method */
+/* Multi dimension easing structure */
+typedef struct {
+	Ease dimension[MULTI_MAX];										/* The diferent easing dimensions */
+	int (*fpoint)();												/* Hold a pointer to our callback function */
+} Ease_Multi;
+
+/* Wrapper Functions */
+int ease(Ease *e, ...);												/* single dimension easing caller */
+int ease_multi(Ease_Multi *e, ...);									/* multi dimension easing caller */
 
 /* Ease Functions */
 int easeIn(Ease *e);												/* Ease value in */

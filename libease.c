@@ -21,7 +21,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <ease.h>
 
 /************************************************************************/
-/*							Wrapper Function							*/
+/*					Single dimension wrapper Function					*/
 /************************************************************************/
 int ease(Ease *e, ...)
 {
@@ -47,6 +47,58 @@ int ease(Ease *e, ...)
 		/* Lets call our function pointer */
 		(*e->fpoint)(e,ap_copy);
 		e->time++;
+	}
+
+	va_end(ap);
+	return(retval);
+}
+
+/************************************************************************/
+/*					Multi dimension wrapper Function					*/
+/************************************************************************/
+int ease_multi(Ease_Multi *e, ...)
+{
+	/* Lets parse the variadic call */
+	va_list ap, ap_copy;
+	va_start(ap, e);
+	int retval = 0;
+	int time = 0;
+	register int t;
+	register int duration = 0;
+
+	/* Reset the times on all dimensions and calculate the highest duration */
+	for(t=0; t<MULTI_MAX; ++t) {
+		if (e->dimension[t].type) {
+			e->dimension[t].time = 0;
+			if (e->dimension[t].duration > duration) {
+				duration = e->dimension[t].duration;
+			}
+		}
+	}
+
+	/* Loop through our time value for (duration) iterations */
+	while(time <= duration) {
+		for(t=0; t<MULTI_MAX; ++t) {
+			if (e->dimension[t].type) {
+				if (e->dimension[t].time <= e->dimension[t].duration) {
+					/* Run the function pointed to in e->type. This should be a ease type */
+					retval = e->dimension[t].type(&e->dimension[t]);
+					e->dimension[t].time++;
+				}
+			}
+		}
+
+		/* For each iteration, we call the callback function */
+#ifdef __va_copy
+		/* Create a copy of ap */
+		__va_copy(ap_copy, ap);
+#else
+		/* We dont have __va_copy, just try copy it */
+		ap_copy = ap;
+#endif
+		/* Lets call our function pointer */
+		(*e->fpoint)(e,ap_copy);
+		time++;
 	}
 
 	va_end(ap);

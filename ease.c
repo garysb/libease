@@ -8,6 +8,7 @@
 
 /* This is a 'test/example' case for the ease library. */
 int show_step(Ease *testEase,va_list ap);
+int show_step_multi(Ease_Multi *testEase,va_list ap);
 
 /* Our main function to run our test/example program. */
 int main(int argc, char **argv) {
@@ -16,7 +17,7 @@ int main(int argc, char **argv) {
 
 	/* If we have no arguments, return program usage */
 	if (argc < 2) {
-		printf("Usage: ./ease [in|out|none|io|oi|bi|bo|ki|ko|kb]\n");
+		printf("Usage: ./ease [in|out|none|io|oi|bi|bo|ki|ko|kb|multi]\n");
 		return(retval);
 	}
 
@@ -155,6 +156,41 @@ int main(int argc, char **argv) {
 			retval				= ease(&noneEase,j,i);
 			continue;
 		}
+
+		/* Test multi dimension easing */
+		if (!strcmp(argv[i], "multi")) {
+			/* Multi dimension structure (#NOTE: no callback for each dimension.) */
+			Ease_Multi multiEase;
+			/* Initialise the dimentions */
+			register int t;
+			for (t=0; t<MULTI_MAX; ++t) multiEase.dimension[t].type = '\0';
+
+			/* Set the callback method */
+			multiEase.fpoint					= show_step_multi;
+
+			/* X dimension */
+			multiEase.dimension[0].type			= &easeNone;
+			multiEase.dimension[0].initial		= 0;
+			multiEase.dimension[0].duration		= 20;
+			multiEase.dimension[0].difference	= 20;
+
+			/* Y dimension */
+			multiEase.dimension[1].type			= &easeIn;
+			multiEase.dimension[1].initial		= 0;
+			multiEase.dimension[1].duration		= 10;
+			multiEase.dimension[1].difference	= 20;
+
+			/* Z dimension */
+			multiEase.dimension[2].type			= &easeOut;
+			multiEase.dimension[2].initial		= 0;
+			multiEase.dimension[2].duration		= 10;
+			multiEase.dimension[2].difference	= 20;
+
+			/* Execute the multi dimension easing */
+			char *j				= "EASE MULTIPLE DIMENSIONS (x=none 20 steps,y=in 10 steps,z=out 10 steps, in this example)";
+			retval				= ease_multi(&multiEase,j,i);
+			continue;
+		}
 	}
 
 	return(retval);
@@ -169,5 +205,17 @@ int show_step(Ease *testEase, va_list ap) {
 
 	/* For each step, print out or step value */
 	printf("\tStep value: %d\n", testEase->value);
+	return 0;
+}
+
+/* Our function called on each step of the multi dimentional ease. (aka callback function) */
+int show_step_multi(Ease_Multi *testEase, va_list ap) {
+	/* Display the passthru variables if time = 0 */
+	if (testEase->dimension[0].time == 1) {
+		printf("Test %d: %s\n", va_arg(ap,int), va_arg(ap,char*));
+	}
+
+	/* For each step, print out or step value */
+	printf("\tStep value: x=%d y=%d z=%d\n", testEase->dimension[0].value, testEase->dimension[1].value, testEase->dimension[2].value);
 	return 0;
 }
