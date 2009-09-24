@@ -163,12 +163,11 @@ int main(int argc, char **argv) {
 /* Our function called on each step of the ease. (aka callback function) */
 int show_step(Ease *testEase, va_list ap) {
 	/* Display the passthru variables if time = 0 */
-	if (testEase->time == 0) {							/* If this is the first run, display our passthru variables */
-//		printf("%d. Ease method: %s\n", va_arg(ap,int), j);	/* Display our string passthru */
+	if (testEase->time == 0) {
 		printf("Test %d: %s\n", va_arg(ap,int), va_arg(ap,char*));
-//		char *j = va_arg(ap, char*);					/* Copy the string from our pointer */
-//		printf("M: %s\n", j);
 	}
-	printf("\tStep value: %d\n", testEase->value);		/* Print out our current ease value */
-	return 0;											/* All went well, continue with ease */
+
+	/* For each step, print out or step value */
+	printf("\tStep value: %d\n", testEase->value);
+	return 0;
 }
