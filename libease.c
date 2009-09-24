@@ -23,68 +23,34 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /************************************************************************/
 /*							Wrapper Function							*/
 /************************************************************************/
-int ease(Ease *e, ...)													/* Function to check which ease method to use */
+int ease(Ease *e, ...)
 {
 	/* Lets parse the variadic call */
-	va_list ap, ap_copy;												/* Extract our variable arguments */
-	va_start(ap, e);													/* Start our variadic argument parsing */
-	int retval	= 0;													/* Set our default return value */
+	va_list ap, ap_copy;
+	va_start(ap, e);
+	int retval	= 0;
+	e->time		= 0;
 
-	/* Loop to get all our results */
-	e->time		= 0;													/* Reset out time marker */
-
+	/* Loop through our time value for (duration) iterations */
 	while(e->time <= e->duration) {
-		/* Need to find an efective way of doing this, anybody know		*/
-		/* how to call a function from a string name, or a func_exists,	*/
-		/* or define a pointer to a function from a string name???		*/
-		switch( e->type )
-		{
-			case IN:													/* Call the easeIn function */
-				retval		= easeIn(e);								/* Run our easeIn function */
-				break;
-			case OUT:													/* Call the easeOut function */
-				retval		= easeOut(e);								/* Run our easeOut function */
-				break;
-			case IO:													/* Call the easeIo function */
-				retval		= easeIo(e);								/* Run our easeIo function */
-				break;
-			case OI:													/* Call the easeOi function */
-				retval		= easeOi(e);								/* Run our easeOi function */
-				break;
-			case BI:													/* Call the easeOi function */
-				retval		= easeBounceIn(e);							/* Run our easeOi function */
-				break;
-			case BO:													/* Call the easeOi function */
-				retval		= easeBounceOut(e);							/* Run our easeOi function */
-				break;
-			case KI:													/* Call the easeOi function */
-				retval		= easeBackIn(e);							/* Run our easeOi function */
-				break;
-			case KO:													/* Call the easeOi function */
-				retval		= easeBackOut(e);							/* Run our easeOi function */
-				break;
-			case KB:													/* Call the easeOi function */
-				retval		= easeBackIo(e);							/* Run our easeOi function */
-				break;
-			case NONE:													/* Call the easeNone function (linear) */
-			default:
-				retval		= easeNone(e);								/* Run our easeNone function */
-				break;
-		}
+		/* Run the function pointed to in e->type. This should be a ease type */
+		retval = e->type(e);
 
 		/* For each iteration, we need to copy the ap and pass it into ease */
 #ifdef __va_copy
-		__va_copy(ap_copy, ap);											/* Create a copy of ap */
+		/* Create a copy of ap */
+		__va_copy(ap_copy, ap);
 #else
-		ap_copy = ap;													/* We dont have __va_copy, just try copy it */
+		/* We dont have __va_copy, just try copy it */
+		ap_copy = ap;
 #endif
 		/* Lets call our function pointer */
-		(*e->fpoint)(e,ap_copy);										/* Call our function pointed to in fpoint and pass in our args*/
-		e->time++;														/* Increase out time */
+		(*e->fpoint)(e,ap_copy);
+		e->time++;
 	}
 
 	va_end(ap);
-	return(retval);														/* Return our result */
+	return(retval);
 }
 
 /************************************************************************/

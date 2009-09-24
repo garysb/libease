@@ -41,8 +41,8 @@ typedef struct {
 	int initial;													/* The initial value */
 	float overshot;													/* How far to overshoot the value when easing */
 	int value;														/* Hold our result value */
-	int (*fpoint)();												/* Hold a pointer to our function */
-	int type;														/* The ease type */
+	int (*fpoint)();												/* Hold a pointer to our callback function */
+	int (*type)();													/* The ease type */
 } Ease;
 
 /* Wrapper Function */

@@ -1,5 +1,10 @@
 libease changelog
 
+##### libease 0.0.4 ##########
+Changed copyright information
+Tidied up comments
+
+
 ##### libease 0.0.3 ##########
 Changed copyright information
 Modified Makefile to use dynamic variables for the versioning

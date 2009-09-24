@@ -1,208 +1,174 @@
 /* vim: set ts=4 sw=4 nowrap: */
-/*
-Copyright (C) 2007 Gary Stidston-Broadbent.
-
-This program is free software; you can redistribute it and/or
-modify it under the terms of the GNU General Public License
-as published by the Free Software Foundation; either version 2
-of the License, or (at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program; if not, write to the Free Software
-Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-*/
+/*	This code is free of any copyright. Feel free to use anyway you like. */
 
 #include <stdio.h>
 #include <stdarg.h>
 #include <string.h>
 #include <ease.h>
 
-/* This is a 'test/example' case for the ease library	*/
-/* You are free to use any of this code for whatever	*/
-/* uses you need.					*/
-int call(Ease *testEase,va_list ap);
+/* This is a 'test/example' case for the ease library. */
+int show_step(Ease *testEase,va_list ap);
 
 /* Our main function to run our test/example program. */
 int main(int argc, char **argv) {
-	int retval					= 1;
+	int retval = 1;
+	int i;
 
 	/* If we have no arguments, return program usage */
 	if (argc < 2) {
 		printf("Usage: ./ease [in|out|none|io|oi|bi|bo|ki|ko|kb]\n");
-		return 1;
+		return(retval);
 	}
-
-	/* Loop counter to return test number */
-	int i;
-
-	/* Get any information typed on the command line */
-			char passthru1[20];
-			int passthru2;
-			strcpy(passthru1,"Test string passthru");
-			passthru2			= 10;
 
 	/* Loop through arguments */
 	for (i = 1; i < argc; i++) {
-
 		/* If we have an 'in' argument */
 		if (!strcmp(argv[i], "in")) {
 			/* Create and populate our structure */
 			Ease inEase;
-			inEase.type			= IN;					/* Set our ease type. (IN,OUT,IO,OI,NONE,BI,BO) */
+			inEase.type			= &easeIn;				/* Create a pointer to one of our easing methods (defined in ease.h) */
 			inEase.initial		= 0;					/* Set our starting point */
 			inEase.duration		= 10;					/* The quantity of times the easing should take to complete */
 			inEase.difference	= 20;					/* Set the difference (eg.we want to move the object 10 px) */
-			inEase.fpoint		= call;					/* We set the function pointer to 'call' on each stage of the ease */
-			passthru2			= 1;					/* Set an intager to test variadic function call */
-			strcpy(passthru1,"IN");						/* Set a string to test variadic function call */
-			retval				= ease(&inEase,passthru1,passthru2);		/* Run our easing function */
+			inEase.fpoint		= show_step;			/* We set the function pointer to 'show' on each stage of the ease */
+			char *j				= "EASE IN (number changes slowly at first, then increases)";	/* Just a test string to pass into our interation function */
+			retval				= ease(&inEase,j,i);	/* Run our easing function i and j are to test passing random variables in */
 			continue;									/* And break loop */
 		}
 
 		/* If we have an 'out' argument */
 		if (!strcmp(argv[i], "out")) {
 			Ease outEase;
-			outEase.type		= OUT;
+			outEase.type		= &easeOut;
 			outEase.initial		= 0;
 			outEase.duration	= 10;
 			outEase.difference	= 20;
-			outEase.fpoint		= call;
-			passthru2			= 2;
-			strcpy(passthru1,"OUT");
-			retval				= ease(&outEase,passthru1,passthru2);
+			outEase.fpoint		= show_step;
+			char *j				= "EASE OUT (large number changes in the beginning, then slows down)";
+			retval				= ease(&outEase,j,i);
 			continue;
 		}
 
 		/* If we have the 'io' argument */
 		if (!strcmp(argv[i], "io")) {
 			Ease ioEase;
-			ioEase.type			= IO;
+			ioEase.type			= &easeIo;
 			ioEase.initial		= 0;
 			ioEase.duration		= 10;
 			ioEase.difference	= 20;
-			ioEase.fpoint		= call;
-			passthru2			= 3;
-			strcpy(passthru1,"IO");
-			retval				= ease(&ioEase,passthru1,passthru2);
+			ioEase.fpoint		= show_step;
+			char *j				= "EASE IN-OUT (small number changes in the beginning and end, large changes in the middle)";
+			retval				= ease(&ioEase,j,i);
 			continue;
 		}
 
 		/* If we have the 'oi' argument */
 		if (!strcmp(argv[i], "oi")) {
 			Ease oiEase;
-			oiEase.type			= OI;
+			oiEase.type			= &easeOi;
 			oiEase.initial		= 0;
 			oiEase.duration		= 10;
 			oiEase.difference	= 20;
-			oiEase.fpoint		= call;
-			passthru2			= 4;
-			strcpy(passthru1,"OI");
-			retval				= ease(&oiEase,passthru1,passthru2);
+			oiEase.fpoint		= show_step;
+			char *j				= "EASE OUT-IN (big diference in numbers at beginning and end, small in the middle)";
+			retval				= ease(&oiEase,j,i);
 			continue;
 		}
 
 		/* If we have the 'bi' argument */
 		if (!strcmp(argv[i], "bi")) {
 			Ease biEase;
-			biEase.type			= BI;
+			biEase.type			= &easeBounceIn;
 			biEase.initial		= 0;
 			biEase.duration		= 10;
 			biEase.difference	= 20;
-			biEase.fpoint		= call;
-			passthru2			= 5;
-			strcpy(passthru1,"BI");
-			retval				= ease(&biEase,passthru1,passthru2);
+			biEase.fpoint		= show_step;
+			char *j				= "EASE BOUNCE-IN (numbers rise, then fall, then increase up to end)";
+			retval				= ease(&biEase,j,i);
 			continue;
 		}
 
 		/* If we have the 'bo' argument */
 		if (!strcmp(argv[i], "bo")) {
 			Ease boEase;
-			boEase.type			= BO;
+			boEase.type			= &easeBounceOut;
 			boEase.initial		= 0;
 			boEase.duration		= 10;
 			boEase.difference	= 20;
-			boEase.fpoint		= call;
-			passthru2			= 6;
-			strcpy(passthru1,"BO");
-			retval				= ease(&boEase,passthru1,passthru2);
+			boEase.fpoint		= show_step;
+			char *j				= "EASE BOUNCE-OUT (quick increase, then numbers drop, then rise to end)";
+			retval				= ease(&boEase,j,i);
 			continue;
 		}
 
 		/* If we have the 'ki' argument */
 		if (!strcmp(argv[i], "ki")) {
 			Ease kiEase;
-			kiEase.type			= KI;
+			kiEase.type			= &easeBackIn;
 			kiEase.initial		= 0;
 			kiEase.duration		= 10;
 			kiEase.difference	= 20;
 			kiEase.overshot		= 2;
-			kiEase.fpoint		= call;
-			passthru2			= 7;
-			strcpy(passthru1,"KI");
-			retval				= ease(&kiEase,passthru1,passthru2);
+			kiEase.fpoint		= show_step;
+			char *j				= "EASE BACK-IN (numbers decrease from start, then increase to end)(negatives if start from zero)";
+			retval				= ease(&kiEase,j,i);
 			continue;
 		}
 
 		/* If we have the 'ko' argument */
 		if (!strcmp(argv[i], "ko")) {
 			Ease koEase;
-			koEase.type			= KO;
+			koEase.type			= &easeBackOut;
 			koEase.initial		= 0;
 			koEase.duration		= 10;
 			koEase.difference	= 20;
 			koEase.overshot		= 2;
-			koEase.fpoint		= call;
-			passthru2			= 8;
-			strcpy(passthru1,"KO");
-			retval				= ease(&koEase,passthru1,passthru2);
+			koEase.fpoint		= show_step;
+			char *j				= "EASE BACK-OUT (numbers increase past end, then reduce back to end)";
+			retval				= ease(&koEase,j,i);
 			continue;
 		}
 
 		/* If we have the 'kb' argument */
 		if (!strcmp(argv[i], "kb")) {
 			Ease kbEase;
-			kbEase.type			= KB;
+			kbEase.type			= &easeBackIo;
 			kbEase.initial		= 0;
 			kbEase.duration		= 10;
 			kbEase.difference	= 20;
 			kbEase.overshot		= 2;
-			kbEase.fpoint		= call;
-			passthru2			= 9;
-			strcpy(passthru1,"KB");
-			retval				= ease(&kbEase,passthru1,passthru2);
+			kbEase.fpoint		= show_step;
+			char *j				= "EASE BACK-IN-OUT (decrease below start, then increase past end, then back to end) (negative if from zero)";
+			retval				= ease(&kbEase,j,i);
 			continue;
 		}
 
 		/* If we have the 'none' argument */
 		if (!strcmp(argv[i], "none")) {
 			Ease noneEase;
-			noneEase.type		= NONE;
+			noneEase.type		= &easeNone;
 			noneEase.initial	= 0;
 			noneEase.duration	= 10;
 			noneEase.difference	= 20;
-			noneEase.fpoint		= call;
-			passthru2			= 10;
-			strcpy(passthru1,"NONE");
-			retval				= ease(&noneEase,passthru1,passthru2);
+			noneEase.fpoint		= show_step;
+			char *j				= "EASE NONE (linear movement from start to end by dividing duration by steps)";
+			retval				= ease(&noneEase,j,i);
 			continue;
 		}
 	}
+
 	return(retval);
 }
 
 /* Our function called on each step of the ease. (aka callback function) */
-int call(Ease *testEase, va_list ap) {
+int show_step(Ease *testEase, va_list ap) {
 	/* Display the passthru variables if time = 0 */
 	if (testEase->time == 0) {							/* If this is the first run, display our passthru variables */
-		char *passthru1			= va_arg(ap,char*);		/* Copy the string from our pointer */
-		printf("%d. Ease method: %s\n", va_arg(ap,int), passthru1);	/* Display our string passthru */
+//		printf("%d. Ease method: %s\n", va_arg(ap,int), j);	/* Display our string passthru */
+		printf("Test %d: %s\n", va_arg(ap,int), va_arg(ap,char*));
+//		char *j = va_arg(ap, char*);					/* Copy the string from our pointer */
+//		printf("M: %s\n", j);
 	}
-	printf("Ease result: %d\n", testEase->value);		/* Print out our current ease value */
+	printf("\tStep value: %d\n", testEase->value);		/* Print out our current ease value */
 	return 0;											/* All went well, continue with ease */
 }
