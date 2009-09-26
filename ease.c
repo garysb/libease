@@ -176,7 +176,7 @@ int main(int argc, char **argv) {
 
 			/* Y dimension */
 			multiEase.dimension[1].type			= &easeIn;
-			multiEase.dimension[1].initial		= 0;
+			multiEase.dimension[1].initial		= 10;
 			multiEase.dimension[1].duration		= 10;
 			multiEase.dimension[1].difference	= 20;
 
@@ -184,7 +184,7 @@ int main(int argc, char **argv) {
 			multiEase.dimension[2].type			= &easeOut;
 			multiEase.dimension[2].initial		= 0;
 			multiEase.dimension[2].duration		= 10;
-			multiEase.dimension[2].difference	= 20;
+			multiEase.dimension[2].difference	= 50;
 
 			/* Execute the multi dimension easing */
 			char *j				= "EASE MULTIPLE DIMENSIONS (x=none 20 steps,y=in 10 steps,z=out 10 steps, in this example)";
