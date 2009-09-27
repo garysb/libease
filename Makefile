@@ -25,20 +25,20 @@ libease.so.${EASEVER}: $(OBJS)
 
 # Build our .o file from our .c file using flags
 libease.o:
-	@install ease.h ${PREFIX}/include/
+	@install --mode=0644 ease.h ${PREFIX}/include/
 	@${CC} ${CFLAGS} ${OBJS} ${SRCS}
 
 # Install libease into the system
 install:
 	@echo "Copying libease.so.${EASEVER} -> ${LIBPATH}"
-	@install libease.so.${EASEVER} ${LIBPATH}
+	@install --mode=0644 libease.so.${EASEVER} ${LIBPATH}
 	@ldconfig
 	@echo "Linking ${LIBPATH}/libease.so.${EASEVER} -> ${LIBPATH}/libease.so"
 	@ln -s ${LIBPATH}/libease.so.${EASEVER} ${LIBPATH}/libease.so
 	@echo "Copying ease.h -> ${PREFIX}/include/"
-	@install ease.h ${PREFIX}/include/
+	@install --mode=0644 ease.h ${PREFIX}/include/
 	@echo "Installing man libease.3 -> ${MAN_PATH}/libease.3"
-	@install libease.3 $(MAN_PATH)
+	@install --mode=0644 libease.3 $(MAN_PATH)
 	@ldconfig
 	@echo "Complete. Please type 'make test' to ensure that the\nlibrary was installed properly."
 
