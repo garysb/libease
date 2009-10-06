@@ -18,6 +18,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 #include <stdio.h>
 #include <stdarg.h>
+#include <stdlib.h>
 #include <ease.h>
 
 /************************************************************************/
@@ -32,7 +33,7 @@ int ease(Ease *e, ...)
 	e->time		= 0;
 
 	/* Make sure our duration is larger than zero */
-	e->duration = (e->duration < 1) ? 1 : e->duration;
+	e->duration = abs(e->duration);
 
 	/* Loop through our time value for (duration) iterations */
 	while(e->time <= e->duration) {
@@ -73,6 +74,7 @@ int ease_multi(Ease_Multi *e, ...)
 	for(t=0; t<MULTI_MAX; ++t) {
 		if (e->dimension[t].type) {
 			e->dimension[t].time = 0;
+			e->dimension[t].duration = abs(e->dimension[t].duration);
 			if (e->dimension[t].duration > duration) {
 				duration = e->dimension[t].duration;
 			}
