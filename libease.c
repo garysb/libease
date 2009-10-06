@@ -31,6 +31,9 @@ int ease(Ease *e, ...)
 	int retval	= 0;
 	e->time		= 0;
 
+	/* Make sure our duration is larger than zero */
+	e->duration = (e->duration < 1) ? 1 : e->duration;
+
 	/* Loop through our time value for (duration) iterations */
 	while(e->time <= e->duration) {
 		/* Run the function pointed to in e->type. This should be a ease type */
@@ -64,7 +67,7 @@ int ease_multi(Ease_Multi *e, ...)
 	int retval = 0;
 	int time = 0;
 	register int t;
-	register int duration = 0;
+	register int duration = 1;
 
 	/* Reset the times on all dimensions and calculate the highest duration */
 	for(t=0; t<MULTI_MAX; ++t) {
