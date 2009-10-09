@@ -191,6 +191,19 @@ int main(int argc, char **argv) {
 			retval				= ease_multi(&multiEase,j,i);
 			continue;
 		}
+
+		/* If we have 'zero' argument */
+		if (!strcmp(argv[i], "zero")) {
+			Ease zeroEase;
+			zeroEase.type		= &easeIn;
+			zeroEase.initial	= 10;
+			zeroEase.duration	= 0;
+			zeroEase.difference	= 0;
+			zeroEase.fpoint		= show_step;
+			char *j				= "EASE ZERO (easing with zero set as duration and difference, return initial '10')";
+			retval				= ease(&zeroEase,j,i);
+			continue;
+		}
 	}
 
 	return(retval);

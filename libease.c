@@ -35,6 +35,22 @@ int ease(Ease *e, ...)
 	/* Make sure our duration is larger than zero */
 	e->duration = abs(e->duration);
 
+	/* If our diference is zero, just call the function pointer and return */
+	if (e->difference == 0) {
+		e->value = e->initial;
+		(*e->fpoint)(e,ap);
+		va_end(ap);
+		return(0);
+	}
+
+	/* If our duration is zero, add initial and difference, then return */
+	if (e->duration == 0) {
+		e->value = e->initial + e->difference;
+		(*e->fpoint)(e,ap);
+		va_end(ap);
+		return(0);
+	}
+
 	/* Loop through our time value for (duration) iterations */
 	while(e->time <= e->duration) {
 		/* Run the function pointed to in e->type. This should be a ease type */
@@ -75,6 +91,7 @@ int ease_multi(Ease_Multi *e, ...)
 		if (e->dimension[t].type) {
 			e->dimension[t].time = 0;
 			e->dimension[t].duration = abs(e->dimension[t].duration);
+			e->dimension[t].value = e->dimension[t].initial;
 			if (e->dimension[t].duration > duration) {
 				duration = e->dimension[t].duration;
 			}
@@ -86,8 +103,11 @@ int ease_multi(Ease_Multi *e, ...)
 		for(t=0; t<MULTI_MAX; ++t) {
 			if (e->dimension[t].type) {
 				if (e->dimension[t].time <= e->dimension[t].duration) {
-					/* Run the function pointed to in e->type. This should be a ease type */
-					retval = e->dimension[t].type(&e->dimension[t]);
+					/* If the diference is zero, skip ease */
+					if (e->dimension[t].difference != 0) {
+						/* Run the ease type pointed to in e->type */
+						retval = e->dimension[t].type(&e->dimension[t]);
+					}
 					e->dimension[t].time++;
 				}
 			}
