@@ -7,7 +7,7 @@ make uninstall
 make
 
 # Check the file was compiled correctly
-if [ -e "libease.so.0.0.4" ]
+if [ -e "libease.so.0.0.5" ]
 then
 	make install
 	make test

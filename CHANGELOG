@@ -1,5 +1,10 @@
 libease changelog
 
+##### libease 0.0.5 ##########
+Added some more test cases
+Fixed a bug caused when the duration and difference are set to zero
+Fixed a bug caused when the duration is a negative value
+
 ##### libease 0.0.4 ##########
 Changed copyright information
 Tidied up comments

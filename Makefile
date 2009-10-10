@@ -4,7 +4,7 @@ CC			= gcc
 PREFIX		= /usr
 
 # Setup our variables
-EASEVER		= "0.0.4"
+EASEVER		= "0.0.5"
 MAN_PATH	= ${PREFIX}/share/man/man3
 LIBPATH		= ${PREFIX}/lib
 BINPATH		= ${PREFIX}/bin

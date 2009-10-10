@@ -1,5 +1,11 @@
 Libease Release notes
 
+##### 0.0.5 ##########
+This release of libease fixes some bugs caused by programs providing problematic
+values. One of the main problems fixed was caused by the duration and difference
+being set to zero. This in tern caused the value not to be set to a valid number
+which caused the error.
+
 ##### 0.0.4 ##########
 This release of libease adds the ability to do multi dimensional easing, removes
 the huge switch statement an replaces it with a much cleaner function pointer,
