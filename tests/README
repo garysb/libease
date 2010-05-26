@@ -1,0 +1,2 @@
+To compile the test app, type: gcc -lease ease.c -o ease-test
+

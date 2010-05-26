@@ -2,9 +2,10 @@
 AC_PREREQ([2.65])
 AC_INIT(libease, 0.0.6, libease@stroppytux.net, ,http://www.stroppytux.net/projects/libease/)
 AM_PROG_LIBTOOL
+AC_CONFIG_MACRO_DIR([m4])
 
 # Set some information about the headers and makefiles
-AC_CONFIG_SRCDIR([src/ease.h.h])
+AC_CONFIG_SRCDIR([src/ease.h])
 AC_CONFIG_HEADERS([src/config.h])
 AC_CONFIG_FILES([Makefile src/Makefile])
 

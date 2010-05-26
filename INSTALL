@@ -1,23 +1,36 @@
-libease install manual
+-----libease installation guide-----
 
------BEGINNERS GUIDE-----
+Depending on how you get libease, there are two diferent installation methods.
+With the version checked out from the subversion repository, you will need to
+have the automake tools installed. With the tar.gz file from sourceforge or from
+freashmeat, this has already been done for you.
 
-This is intended for those not fluent with linux
+As most people that are less savvy tend to stick to Ubuntu, I will describe the
+installation methods for Ubuntu. Please bare this in mind and change commands to
+match your environment.
 
-Please type the following at root:
+1.*** USING THE CHECKED OUT VERSION FROM svn.stroppytux.net ***
+   *  If you downloaded the tar.gz version, skip to section 2.
+   *  # sudo apt-get install automake libtool libx11-dev libxmu-dev build-essential
+   *  # svn co http://anonymous@svn.stroppytux.net/xlayout/tags/0.9 xlayout-0.9
+   *  Change into the root directory of xlayout (contains configure.ac)
 
-sh ./install.sh
+   *  # aclocal # This generates your aclocal.m4 file.
+   *  # autoheader # This generates the src/config.h.in template file.
+   *  # automake --add-missing # This generates all the scripts for autoconf.
+   *  # autoconf # This generates your configure script to compile xlayout.
 
------NOT SO BEGINNERS GUIDE-----
+2.*** USING THE tar.gz VERSION FROM sourcefore.net/freshmeat.net ***
+   *  If you downloaded the subversion version, skip to section 3.
+   *  # sudo apt-get install libx11-dev libxmu-dev build-essential
+   *  # cd /tmp # Change to temp directory. (Should be /usr/src but need to be root for that)
+   *  # wget http://downloads.sourceforge.net/project/xlayout/xlayout/xlayout-0.9/xlayout-0.9.tar.bz2
+   *  # tar -jxf xlayout-0.9.tar.bz2 # Extract the contents (-j: bzip2 -x: extract -f: file)
+   *  # cd xlayout-0.9 # Change into the xlayout source directory.
 
-Setting prefix: There is currently only the 'Edit the Makefile' method.
-		(sorry, getting to it)
-
-then type the following:
-
-make clean
-make
-make install
-make test
-run ease to test install
+3.*** ALL USERS ONCE YOU HAVE COMPLETED SECTION 2 OR 3 ***
+   *  # ./configure --help # Check which options you need. I use --prefix=/usr
+   *  # ./configure <OPTIONS> # configure xlayout with your options.
+   *  # make # Builds xlayout source into a binary file.
+   *  # sudo make install # Installs xlayout, the header, andthe man file.
 
