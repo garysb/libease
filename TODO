@@ -1,0 +1,16 @@
+1. Update the ease test file to integrate into autoconf. This will allow us to
+   run tests using 'make installcheck' to check the library has been correctly
+   installed and is working properly.
+
+2. Change syntax used in libease.c to let us use the -Werror option when
+   compiling libease. Currently it complains about the use of /=
+
+3. Add some examples of how to use it. These should contain an example for some
+   of the window managers, and also a python ctypes example. Maybe also make a
+   php example for things like div offset placements.
+
+4. Add more easing methods and also think about renaming our current ones to let
+   us have diferent expressions for the same ease type. We could then add in
+   a default expression type for the ease type. eg. 'easein' defaults to using
+   the quadratic version.
+

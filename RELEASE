@@ -1,5 +1,11 @@
 Libease Release notes
 
+##### 0.0.6 ##########
+In this release of libease, we have finally moved away from using our custom
+makefile and now use autoconf to generate our configure and Makefile. We have
+also updated some of the easing methods syntax to ensure we get no random off
+values doe to using before and after constructs within c.
+
 ##### 0.0.5 ##########
 This release of libease fixes some bugs caused by programs providing problematic
 values. One of the main problems fixed was caused by the duration and difference

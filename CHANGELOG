@@ -1,5 +1,12 @@
 libease changelog
 
+##### libease 0.0.6 ##########
+Migrated away from using custom Makefiles to using an autoconf setup
+Changed the directory structure
+Added a TODO file to list outstanding jobs
+Rewrote the INSTALL instructions to be more understandable
+Added the README file
+
 ##### libease 0.0.5 ##########
 Added some more test cases
 Fixed a bug caused when the duration and difference are set to zero
