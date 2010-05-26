@@ -1,5 +1,5 @@
 # Ensure we have the correct version of autoconf running and initialise it.
-AC_PREREQ([2.64])
+AC_PREREQ([2.61])
 AC_INIT(libease, 0.0.6, libease@stroppytux.net, ,http://www.stroppytux.net/projects/libease/)
 AM_PROG_LIBTOOL
 AC_CONFIG_MACRO_DIR([m4])

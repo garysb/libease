@@ -14,7 +14,7 @@ match your environment.
    *  # sudo apt-get install automake libtool build-essential
    *  # svn co http://anonymous@svn.stroppytux.net/libease/tags/0.0.6 libease-0.0.6
    *  Change into the root directory of libease (contains configure.ac)
-   *  # libtoolize # This generates the lt-main.sh script for libtool.
+   *  # libtoolize # (glibtoolize in OSX) This generates the lt-main.sh script for libtool.
    *  # aclocal # This generates your aclocal.m4 file.
    *  # autoheader # This generates the src/config.h.in template file.
    *  # automake --add-missing # This generates all the scripts for autoconf.
