@@ -1,13 +1,11 @@
 language: c
-sudo: false
+sudo: required
 
 os:
   - linux
-  - osx
 
 compiler:
   - gcc
-  - clang
 
 # don't create redundant code coverage reports
 # - AUTOTOOLS=yes COVERAGE=yes BUILD=static
@@ -20,24 +18,24 @@ compiler:
 # - AUTOTOOLS=yes COVERAGE=no BUILD=static
 
 env:
-  - AUTOTOOLS=no COVERAGE=no BUILD=shared
-  - AUTOTOOLS=no COVERAGE=yes BUILD=static
+#  - AUTOTOOLS=no COVERAGE=no BUILD=shared
+#  - AUTOTOOLS=no COVERAGE=yes BUILD=static
   - AUTOTOOLS=yes COVERAGE=no BUILD=shared
 
 # currenty there are various issues when
 # built with coverage, clang and autotools
 # - AUTOTOOLS=yes COVERAGE=yes BUILD=shared
 
-matrix:
-  exclude:
-    - compiler: clang
-      env: AUTOTOOLS=yes COVERAGE=yes BUILD=static
-    - os: linux
-      env: AUTOTOOLS=no COVERAGE=no BUILD=shared
-    - os: osx
-      compiler: gcc
-    - os: osx
-      env: AUTOTOOLS=no COVERAGE=yes BUILD=static
+# matrix:
+#  exclude:
+#    - compiler: clang
+#      env: AUTOTOOLS=yes COVERAGE=yes BUILD=static
+#    - os: linux
+#      env: AUTOTOOLS=no COVERAGE=no BUILD=shared
+#    - os: osx
+#      compiler: gcc
+#    - os: osx
+#      env: AUTOTOOLS=no COVERAGE=yes BUILD=static
 
 # script: ./script/ci-build-libsass
 # before_install: ./script/ci-install-deps
