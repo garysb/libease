@@ -44,6 +44,15 @@ matrix:
 # install: ./script/ci-install-compiler
 # after_success: ./script/ci-report-coverage
 
+before_install:
+  - sudo apt-get update -qq
+  - sudo apt-get install -qq automake libtool build-essential
+  - libtoolize
+  - aclocal
+  - autoheader
+  - automake --add-missing
+  - autoconf
+
 notifications:
   slack: bc10:hM6F5WGBdYDX2fPAx0yKmkvj
 
