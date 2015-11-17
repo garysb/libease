@@ -44,3 +44,6 @@ matrix:
 # install: ./script/ci-install-compiler
 # after_success: ./script/ci-report-coverage
 
+notifications:
+  slack: bc10:hM6F5WGBdYDX2fPAx0yKmkvj
+
