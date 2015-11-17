@@ -51,6 +51,9 @@ before_install:
   - automake --add-missing
   - autoconf
 
+script:
+  - ./configure && make && sudo make install && sudo ldconfig && gcc -lease tests/ease.c -o ease-test && ./ease-test multi
+
 notifications:
   slack: bc10:hM6F5WGBdYDX2fPAx0yKmkvj
 
